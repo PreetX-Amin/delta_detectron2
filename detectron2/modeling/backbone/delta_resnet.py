@@ -595,17 +595,14 @@ class DeltaResNet(dc.DCModule):
         # print(torch.max(x), torch.min(x), torch.mean(x.float()))
         x = self.sparsify(x.float().to('cuda'))
         # print(torch.sum(x[1]==0))
-        # print("stem")
         x = self.stem(x)
         if "stem" in self._out_features:
             outputs["stem"] = self.densify(x)
         for name, stage in zip(self.stage_names, self.stages):
-            # print(name)
             x = stage(x)
             if name in self._out_features:
                 outputs[name] = self.densify(x)
         x = self.densify(x)
-        # print("end")
         if self.num_classes is not None:
             x = self.avgpool(x)
             x = torch.flatten(x, 1)
