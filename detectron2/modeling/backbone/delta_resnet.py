@@ -593,7 +593,7 @@ class DeltaResNet(dc.DCModule):
         # print("here")
         # torch.cuda.empty_cache()
         # print(torch.max(x), torch.min(x), torch.mean(x.float()))
-        x = self.sparsify(x.float())
+        x = self.sparsify(x.float().to('cuda'))
         # print(torch.sum(x[1]==0))
         # print("stem")
         x = self.stem(x)
